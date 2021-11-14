@@ -46,3 +46,11 @@ Data:
 └── Visualization_and_plots
     └── [...]
 ```
+
+## Data Processing File Structure
+1. Create functions to process each demographic
+  1. clubbing some data
+  2. removing irrelevant data
+  3. make the state as rows
+  4. demographics as columns
+More to be added--this is just the basic data engineering that needs to be done.
