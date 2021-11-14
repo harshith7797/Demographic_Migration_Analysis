@@ -34,6 +34,7 @@ Data:
   - Renter occupied
 
 ## File Structure
+```
 .
 ├── README.md
 ├── Data
@@ -44,3 +45,4 @@ Data:
 │   └── data_analysis.py
 └── Visualization_and_plots
     └── [...]
+```
