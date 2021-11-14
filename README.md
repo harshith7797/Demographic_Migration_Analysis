@@ -32,3 +32,15 @@ Data:
 - Housing Tenure
   - Owner occupied
   - Renter occupied
+
+## File Structure
+.
+├── README.md
+├── Data
+│   └── migration_data
+│       └── [2010-2019].csv
+├── Processing
+│   ├── data_engineering.py
+│   └── data_analysis.py
+└── Visualization_and_plots
+    └── [...]
