@@ -49,6 +49,7 @@ Data:
 
 ## Data Processing File Structure
 1. Create functions to process each demographic
+
   a. clubbing some data
   b. removing irrelevant data
   c. make the state as rows
