@@ -49,10 +49,9 @@ Data:
 
 ## Data Processing File Structure
 1. Create functions to process each demographic
-
-  a. clubbing some data
-  b. removing irrelevant data
-  c. make the state as rows
-  d. demographics as columns
+    1. clubbing some data
+    2. removing irrelevant data
+    3. make the state as rows
+    4. demographics as columns
 
 More to be added--this is just the basic data engineering that needs to be done.
