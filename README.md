@@ -8,3 +8,27 @@ Data:
 ## In-depth demographics
 - Population
   - 1-18 years old
+  - 19-24 years old
+  - 25-54 years old
+  - 55 years old and above
+- Sex
+- Race
+  - White
+  - Black
+  - Asian
+  - Hispanic
+- Educational attainment
+  - High school and below
+  - Some college and associates degree
+  - Bachelors degree and above
+- Individual income
+  - 1-35k
+  - 35k-50k
+  - 50k-75k
+  - 75k+
+- Poverty level
+  - Below 150%
+  - Above 150%
+- Housing Tenure
+  - Owner occupied
+  - Renter occupied
