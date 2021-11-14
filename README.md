@@ -7,3 +7,4 @@ Data:
 
 ## In-depth demographics
 - Population
+  - 1-18 years old
