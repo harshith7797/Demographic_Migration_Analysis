@@ -54,4 +54,7 @@ Data:
     3. make the state as rows
     4. demographics as columns
 
-More to be added--this is just the basic data engineering that needs to be done.
+More to be added--this is just the basic data engineering that needs to be done. Possible future functions to be added:
+- top/bottom 10 states
+- sorting
+- averaging
