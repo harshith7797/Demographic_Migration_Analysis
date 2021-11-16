@@ -37,12 +37,13 @@ Basic analysis of migration patterns as well as their related demographic charac
 ```
 .
 ├── README.md
-├── Data
+├── data
 │   └── migration_data
 │       └── [2010-2019].csv
-├── Processing
-│   ├── data_engineering.py
-│   └── data_analysis.py
+├── src
+│   ├── MigrationData.py
+│   ├── data_analysis.py
+│   └── README.md
 └── Visualization_and_plots
     └── [...]
 ```
