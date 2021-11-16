@@ -47,7 +47,7 @@ Basic analysis of migration patterns as well as their related demographic charac
 ├── Visualization_and_plots
 │   └── [...]`
 └── project.yaml
-
+```
 
 ## Data Processing File Structure
 1. Create functions to process each demographic
