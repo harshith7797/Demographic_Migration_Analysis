@@ -44,9 +44,10 @@ Basic analysis of migration patterns as well as their related demographic charac
 │   ├── MigrationData.py
 │   ├── data_analysis.py
 │   └── README.md
-└── Visualization_and_plots
-    └── [...]
-```
+├── Visualization_and_plots
+│   └── [...]`
+└── project.yaml
+
 
 ## Data Processing File Structure
 1. Create functions to process each demographic
