@@ -45,7 +45,8 @@ Basic analysis of migration patterns as well as their related demographic charac
 │   ├── data_analysis.py
 │   └── README.md
 ├── Visualization_and_plots
-│   └── [...]`
+│   └── [...]
+├──.gitignore
 └── project.yaml
 ```
 
