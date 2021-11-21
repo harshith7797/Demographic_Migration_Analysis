@@ -61,4 +61,5 @@ Basic analysis of migration patterns as well as their related demographic charac
 ~~- top/bottom 10 states~~
 ~~- sorting~~
 ~~- averaging~~ 
+
 It has been decided that at the moment the data engineering file is more than sufficient for the task of data analysis.
