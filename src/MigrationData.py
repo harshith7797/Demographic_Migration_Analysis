@@ -30,7 +30,6 @@ class MigrationData:
 
         '''
         assert(isinstance(year,int))
-        
         try:
             assert year >= 2010 and year <= 2019
         except AssertionError as e:
@@ -154,6 +153,7 @@ class MigrationData:
         of this function
     
         '''
+        assert(not self.dframe.empty)
         assert(isinstance(self.fname,str))
         assert(isinstance(key,str))
         assert(isinstance(key_type,str))
@@ -208,6 +208,7 @@ class MigrationData:
         From the given data frame it fetches the column name of interest
         
         '''
+        assert(not dframe.empty)
         assert(isinstance(dframe,pd.core.frame.DataFrame))
         assert(isinstance(spec,str))
         for col_name in dframe.columns:
@@ -240,6 +241,7 @@ class MigrationData:
         
         Converts all the elements in the input data frame to float values 
         '''
+        assert(not dframe.empty)
         assert(isinstance(dframe,pd.core.frame.DataFrame))
         assert(isinstance(dtype,object))
         dtype_dict = {}
@@ -264,6 +266,7 @@ class MigrationData:
             filtered output 
 
         '''
+        assert(not dframe.empty)
         assert(isinstance(dframe,pd.core.frame.DataFrame))
         #making the geographic area name as index 
         dframe = dframe.set_index('Geographic Area Name')
@@ -282,7 +285,7 @@ class MigrationData:
         Parameters
         ----------
         key : str
-            category of data (age,sex,poverty status etc.,)
+            category(demography) of data (age,sex,poverty status etc.,)
         key_type : str
             type of data (state,county etc.,)
         in_percentage : bool
@@ -295,6 +298,7 @@ class MigrationData:
             dataframe containing data for the specific key and key_type.
 
         '''
+        assert(not self.dframe.empty)
         assert(isinstance(self.dframe,pd.core.frame.DataFrame))
         assert(isinstance(key,str))
         assert(isinstance(key_type,str))
@@ -331,6 +335,7 @@ class MigrationData:
             from the item_list
 
         '''
+        assert(not dframe.empty)
         assert(isinstance(dframe,pd.core.frame.DataFrame))
         assert(isinstance(item_list,list))
         grp_keys = []
@@ -357,6 +362,7 @@ class MigrationData:
             in the input columns.
 
         '''
+        assert(not dframe.empty)
         assert(isinstance(dframe,pd.core.frame.DataFrame))
         assert(isinstance(grp_key_list,list))
         out_data = pd.Series()
@@ -375,7 +381,7 @@ class MigrationData:
         Parameters
         ----------
         in_percentage : bool
-            boolean value mentions if the output needs to be in percentage form or not
+            boolean value determines if the output needs to be in percentage form or not
 
         Returns
         -------
@@ -384,6 +390,7 @@ class MigrationData:
 
         '''
         assert(isinstance(in_percentage,bool))
+        assert(not self.dframe.empty)
         age_data = self.get_key_data('AGE','state', False)
         age_total = self.get_key_data('AGE','Total', False)
         age_df_total = pd.DataFrame(index = age_data.index)
@@ -430,7 +437,7 @@ class MigrationData:
         Parameters
         ----------
         in_percentage : bool
-            boolean value mentions if the output needs to be in percentage form or not
+            boolean value determines if the output needs to be in percentage form or not
 
         Returns
         -------
@@ -439,6 +446,7 @@ class MigrationData:
 
         '''
         assert(isinstance(in_percentage,bool))
+        assert(not self.dframe.empty)
         sex_data = self.get_key_data('SEX','state', in_percentage)
         keys = ['Male', 'Female']
         grp_keys = self.query_group_keys(sex_data, keys)
@@ -459,7 +467,7 @@ class MigrationData:
         Parameters
         ----------
         in_percentage : bool
-            boolean value mentions if the output needs to be in percentage form or not
+            boolean value determines if the output needs to be in percentage form or not
 
         Returns
         -------
@@ -468,6 +476,7 @@ class MigrationData:
 
         '''
         assert(isinstance(in_percentage,bool))
+        assert(not self.dframe.empty)
         income_data = self.get_key_data('INDIVIDUAL INCOME','state', False)
         income_data_total = self.get_key_data('INDIVIDUAL INCOME','Total', False)
         income_df_total = pd.DataFrame(index = income_data.index)
@@ -516,7 +525,7 @@ class MigrationData:
         Parameters
         ----------
         in_percentage : bool
-            boolean value mentions if the output needs to be in percentage form or not
+            boolean value determines if the output needs to be in percentage form or not
 
         Returns
         -------
@@ -524,6 +533,7 @@ class MigrationData:
             poverty status data grouped into the above categories
 
         '''
+        assert(not self.dframe.empty)
         assert(isinstance(in_percentage,bool))
         poverty_data = self.get_key_data('POVERTY STATUS','state', in_percentage)
         keys = ['Below 100 percent', '100 to 149 percent', 'above 150 percent']
@@ -543,7 +553,7 @@ class MigrationData:
         Parameters
         ----------
         in_percentage : bool
-            boolean value mentions if the output needs to be in percentage form or not
+            boolean value determines if the output needs to be in percentage form or not
 
         Returns
         -------
@@ -551,6 +561,7 @@ class MigrationData:
             housing group data grouped into the above categories
 
         '''
+        assert(not self.dframe.empty)
         assert(isinstance(in_percentage,bool))
         housing_data = self.get_key_data('HOUSING TENURE','state', in_percentage)
         keys = ['owner-occupied', 'renter-occupied']
@@ -571,7 +582,7 @@ class MigrationData:
         Parameters
         ----------
         in_percentage : bool
-            boolean value mentions if the output needs to be in percentage form or not
+            boolean value determines if the output needs to be in percentage form or not
 
         Returns
         -------
@@ -579,6 +590,7 @@ class MigrationData:
             educational attainment data grouped into the above categories
 
         '''
+        assert(not self.dframe.empty)
         assert(isinstance(in_percentage,bool))
         ea_data = self.get_key_data('EDUCATIONAL ATTAINMENT','state', False)
         ea_data_total = self.get_key_data('EDUCATIONAL ATTAINMENT','Total', False)
@@ -623,7 +635,7 @@ class MigrationData:
         Parameters
         ----------
         in_percentage : bool
-            boolean value mentions if the output needs to be in percentage form or not
+            boolean value determines if the output needs to be in percentage form or not
 
         Returns
         -------
@@ -631,6 +643,7 @@ class MigrationData:
             race data grouped into the above categories
 
         '''
+        assert(not self.dframe.empty)
         assert(isinstance(in_percentage,bool))
         race_data = self.get_key_data('RACE','state', in_percentage)
         keys = ['!!White','Black', 'Hispanic or Latino origin (of any race)','Asian']
