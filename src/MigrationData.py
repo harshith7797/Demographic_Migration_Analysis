@@ -17,6 +17,7 @@ class MigrationData:
         ----------
         year : int
             year for which the data needs to be loaded 
+            must be between 2010 and 2019 (inclusive)
 
         Returns
         -------
@@ -28,6 +29,13 @@ class MigrationData:
         creates a MigrationData object for the year 2010 
 
         '''
+        assert(isinstance(year,int))
+        
+        try:
+            assert year >= 2010 and year <= 2019
+        except AssertionError as e:
+            print(repr(e))
+            print('Incorrect year! Must be from 2009 to 2019 (inclusive).')
         self.year = year
         self.fname = self.__get_fname(year)
         self.dframe = pd.DataFrame()
@@ -58,7 +66,6 @@ class MigrationData:
         Fetches the file name for that year
 
         '''
-        assert(isinstance(year,int))
         data_loc = './data/migration_data/'
         #walk through the files in data_loc 
         file_walk = list(os.walk(data_loc))
