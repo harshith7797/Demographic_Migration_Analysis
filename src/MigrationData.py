@@ -253,18 +253,18 @@ class MigrationData:
     @staticmethod
     def filter_data(dframe):
         '''
-        Function to filter out redundant/unneccessary data
+        Function to filter out redundant/unneccessary data and converts to float
 
         Parameters
         ----------
         dframe : pd.core.frame.DataFrame
             input data frame that is to be filtered out 
-
+            
         Returns
         -------
         dframe : pd.core.frame.DataFrame
-            filtered output 
-
+            filtered output and converted to float
+            
         '''
         assert(not dframe.empty)
         assert(isinstance(dframe,pd.core.frame.DataFrame))
@@ -273,7 +273,7 @@ class MigrationData:
         #dropping the Puerto Rico row data 
         dframe = dframe.drop(['Puerto Rico'])
         #updating the NA values 
-        dframe = dframe.replace('N',pd.NA).fillna('0.0')
+        dframe = dframe.replace('N',pd.NA).fillna(0.0)
         #conv dtype to float 
         dframe = MigrationData.conv_dtypes(dframe,float)
         return dframe
