@@ -66,7 +66,7 @@ class MigrationData:
         Fetches the file name for that year
 
         '''
-        data_loc = './data/migration_data/'
+        data_loc = '../data/migration_data/'
         #walk through the files in data_loc 
         file_walk = list(os.walk(data_loc))
         sub_dirs,dirs,files = file_walk[0]
