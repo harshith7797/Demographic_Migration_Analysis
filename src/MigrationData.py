@@ -631,6 +631,7 @@ class MigrationData:
             2. Black or African American
             3. Hispanic or Latino 
             4. Asian
+            5. Other
 
         Parameters
         ----------
@@ -640,18 +641,20 @@ class MigrationData:
         Returns
         -------
         race_data : pd.core.frame.DataFrame 
-            race data grouped into the above categories
+            race data grouped into the above categories (moving from a different state to the given row/state)
 
         '''
         assert(not self.dframe.empty)
         assert(isinstance(in_percentage,bool))
         race_data = self.get_key_data('RACE','state', in_percentage)
-        keys = ['!!White','Black', 'Hispanic or Latino origin (of any race)','Asian']
+        keys = ['!!White','Black', 'Hispanic or Latino origin (of any race)','Asian', 'American Indian and Alaska Native', 'Two or more races', 'Some other race', 'Native Hawaiian and Other Pacific Islander']
         grp_keys = self.query_group_keys(race_data, keys)
         #print(grp_keys)
         race_data = race_data[grp_keys]
-        rename_dict = {grp_keys[0]:"White", grp_keys[1]:"Black or African American", grp_keys[2]:"Hipanic or Latino", grp_keys[3]:"Asian" }
+        rename_dict = {grp_keys[0]:"White", grp_keys[1]:"Black or African American", grp_keys[2]:"Hipanic or Latino", grp_keys[3]:"Asian", grp_keys[4]: "Other1" , grp_keys[5]:"Other2", grp_keys[6]: "Other3", grp_keys[7]: "Other4"}
         race_data = race_data.rename(columns = rename_dict)
+        race_data["Other"] = race_data["Other1"] + race_data["Other2"] + race_data["Other3"] + race_data["Other4"]
+        race_data = race_data.drop( columns = ["Other1", "Other2", "Other3", "Other4"])
         return race_data
         
 if __name__ == '__main__':
