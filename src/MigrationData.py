@@ -3,6 +3,7 @@
 Created on Mon Nov 15 16:17:18 2021
 
 @author: harshith
+Minor edits by Mark
 """
 import os
 import pandas as pd 
@@ -173,12 +174,18 @@ class MigrationData:
         #Read the metadata file associated with the data file to get the actual key values
         metadatafile = self.fname.replace('data_with_overlays','metadata')
         metadata = pd.read_csv(metadatafile)
-        search_key = "Estimate!!" + key
-        if key != 'RACE':
-            key_list = metadata[metadata['id'].map(lambda x: (search_key in x)&(key_type in x))]['id']
-        else:
-            key_list = metadata[metadata['id'].map(lambda x: ((search_key in x) | ('origin' in x) | ('race' in x))&(key_type in x))]['id']
-        
+        if self.year < 2018:
+            search_key = "Estimate!!" + key
+            if key != 'RACE':
+                key_list = metadata[metadata['id'].map(lambda x: (search_key in x) & (key_type in x))]['id']
+            else:
+                key_list = metadata[metadata['id'].map(lambda x: ((search_key in x) | ('origin' in x) | ('race' in x))&(key_type in x))]['id']
+        else: #The years 2018 and above don't use the same formatting, as the 'ESTIMATE!!' tag isn't along with the key
+            search_key = key
+            if key != 'RACE':
+                key_list = metadata[metadata['id'].map(lambda x: (search_key in x)&(key_type in x) & ("Estimate!!" in x))]['id']
+            else:
+                key_list = metadata[metadata['id'].map(lambda x: ((search_key in x) | ('origin' in x) | ('race' in x) & ("Estimate!!" in x))&(key_type in x))]['id']
         return pd.concat([pd.Series(['Geographic Area Name']),key_list])
     
     @staticmethod
