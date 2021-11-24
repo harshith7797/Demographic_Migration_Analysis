@@ -94,7 +94,7 @@ def gen_state_map(population,fname, plot_name):
                        text=population['code'],
                        mode='text')
     
-    fig.show()
+    #fig.show()
     fig.write_image(fname)
 
 
