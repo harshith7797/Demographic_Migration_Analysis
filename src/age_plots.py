@@ -6,7 +6,7 @@ Created on Mon Nov 22 18:16:57 2021
 
 Using "wdir='*/Demographic_Migration_Analysis/src'"
 
-Example data processing and importing. Haven't yet plotted.
+Basic data processing and importing. A pyplot call is used, and one image is created.
 
 """
 
