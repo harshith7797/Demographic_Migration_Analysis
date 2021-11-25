@@ -38,15 +38,21 @@ Basic analysis of migration patterns as well as their related demographic charac
 ├── README.md
 ├── data
 │   └── migration_data
-│       └── [2010-2019].csv
+│       ├── ACSST1Y[2010-2019].S0701_data_with_overlays_2021[...].csv
+│       ├── ACSST1Y[2010-2019].S0701_table_title_2021[...].csv
+│       ├── ACSST1Y[2010-2019].S0701_table_title_2021[...].csv
+│       └── README.md
 ├── src
 │   ├── MigrationData.py
 │   ├── data_analysis.py
+│   ├── __init__.py
+│   ├── age_plots.py
+│   ├── population_plots.py
 │   └── README.md
 ├── Visualization_and_plots
 │   └── [...]
 ├──.gitignore
-└── project.yaml
+└── env.yaml
 ```
 
 ## Data Processing File Structure
