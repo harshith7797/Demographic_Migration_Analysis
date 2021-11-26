@@ -61,6 +61,7 @@ Basic analysis of migration patterns as well as their related demographic charac
     2. removing irrelevant data
     3. make the state as rows
     4. demographics as columns
+2. Create functions to get fastest and slowest growing states
 
 ~~More to be added--this is just the basic data engineering that needs to be done. Possible future functions to be added:~~
 ~~- top/bottom 10 states~~
