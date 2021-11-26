@@ -664,7 +664,8 @@ class MigrationData:
         race_data = race_data.drop( columns = ["Other1", "Other2", "Other3"])
         return race_data
     
-    def get_fastest_growing_5(self):
+    @staticmethod
+    def get_fastest_growing_5():
         '''
         Function to get the fastest growing 5 states
         
@@ -674,11 +675,11 @@ class MigrationData:
             Returns a tuple of the 5 fastest growing states 
         
         '''
-        assert(not self.dframe.empty)
-        #TODO: write fct
-        
-    
-    def get_slowest_growing_5(self):
+        top_5 = MigrationData.sorted_states_by_population_growth()[46:51]
+        return top_5
+           
+    @staticmethod
+    def get_slowest_growing_5():
         '''
         Function to return the slowest growing 5 states. 
         
@@ -688,13 +689,42 @@ class MigrationData:
             Returns a tople of the slowest growing states
         
         '''
-        assert(not self.dframe.empty)
-        #TODO: write fct
+        lowest_5 = MigrationData.sorted_states_by_population_growth()[0:5]
+        return lowest_5
+    
+    @staticmethod
+    def sorted_states_by_population_growth():
+        '''
+        Function that returns the sorted states by population from least to greatest by proportion
+        
+        Returns
+        -------
+        states: series
+            series with the index: states and columns: populations; sorted
+        
+        '''
+        _2010 = MigrationData(2010)
+        _2010.load_dframe()
+        _2019 = MigrationData(2019)
+        _2019.load_dframe()
+        _2010df = _2010.dframe.set_index('Geographic Area Name')
+        _2010df =_2010df.drop(['Puerto Rico'])
+        _2010df = _2010df['Total!!Estimate!!Population 1 year and over']
+        _2010df = _2010df.astype('int32')
+        _2019df = _2019.dframe.set_index('Geographic Area Name')
+        _2019df = _2019df.drop(['Puerto Rico'])
+        _2019df = _2019df['Estimate!!Total!!Population 1 year and over']
+        _2019df = _2019df.astype('int32')
+        total = pd.DataFrame({"Population2010":_2010df, "Population2019":_2019df})
+        total["Percent Change"] = total["Population2019"]/ total["Population2010"]
+        states = total.sort_values(by="Percent Change", axis = 0).index
+        return states
         
 if __name__ == '__main__':
     data_2010 = MigrationData(2010)
     data_2010.load_dframe()
-    
+    fastest_growing = MigrationData.get_fastest_growing_5()
+    slowest_growing = MigrationData.get_slowest_growing_5()
     age_data = data_2010.get_key_data('AGE', 'state', False)        
     age_group_data = data_2010.get_age_group_data(True)
     sex_data = data_2010.get_key_data('SEX', 'state', False) 
