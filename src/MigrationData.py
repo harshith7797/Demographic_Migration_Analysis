@@ -663,6 +663,33 @@ class MigrationData:
         race_data["Other"] = race_data["Other1"] + race_data["Other2"] + race_data["Other3"]
         race_data = race_data.drop( columns = ["Other1", "Other2", "Other3"])
         return race_data
+    
+    def get_fastest_growing_5(self):
+        '''
+        Function to get the fastest growing 5 states
+        
+        Returns
+        -------
+        top_5: tuple
+            Returns a tuple of the 5 fastest growing states 
+        
+        '''
+        assert(not self.dframe.empty)
+        #TODO: write fct
+        
+    
+    def get_slowest_growing_5(self):
+        '''
+        Function to return the slowest growing 5 states. 
+        
+        Returns
+        -------
+        lowest_5: tuple
+            Returns a tople of the slowest growing states
+        
+        '''
+        assert(not self.dframe.empty)
+        #TODO: write fct
         
 if __name__ == '__main__':
     data_2010 = MigrationData(2010)
