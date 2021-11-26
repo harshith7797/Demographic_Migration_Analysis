@@ -16,6 +16,7 @@ Basic analysis of migration patterns as well as their related demographic charac
   - Black
   - Asian
   - Hispanic
+  - Other
 - Educational attainment
   - High school and below
   - Some college and associates degree
