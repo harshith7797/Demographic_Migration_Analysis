@@ -12,7 +12,7 @@ Basic data processing and importing. A pyplot call is used, and one image is cre
 
 from src.MigrationData import MigrationData
 import pandas as pd
-#import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 #import numpy as np
 
 def correct_year(year):
@@ -149,40 +149,87 @@ if  __name__ == '__main__':
         age_data_allyrs[year] = age_data_allyrs[year].sum()
     #Break into under 24 and over 24
     age_data_df = pd.DataFrame(age_data_allyrs.values(), index = years, columns = age_keys)
-    frame_young = {age_keys[0]: age_data_df[age_keys[0]], age_keys[1]: age_data_df[age_keys[1]]}
+    age_data_df.loc[:,'Total'] = age_data_df.sum(axis=1)
+    '''frame_young = {age_keys[0]: age_data_df[age_keys[0]], age_keys[1]: age_data_df[age_keys[1]]}
     y_pf=pd.DataFrame(frame_young) #youth pandas dataframe
     y_plot = y_pf.plot.bar(stacked=True, title = "Youth migration follows a roughly linear path", rot = 0); 
     #y_plot means youth's plot
     y_plot.legend(loc = 'lower center')
     #y_plot.grid(axis = 'y')
-    y_plot.set_ylim((2800000,3400000))
+    #y_plot.set_ylim((2800000,3400000))
     #y_plot.spines['top'].set_visible(False)
     y_plot.ticklabel_format(axis = 'y', useMathText = True)
     y_plot.set_ylabel("Youths migrating")
     y_plot.set_xlabel("Year")
-    y_plot.plot()
+    y_plot.plot()'''
     
-    frame_worth = {age_keys[2]: age_data_df[age_keys[2]]}
-    w_df = pd.DataFrame(frame_worth)
-    w_plot = w_df.plot.bar(title = "~350k increase in working class migration", rot = 0)
-    w_plot.ticklabel_format(axis = 'y', useMathText = True)
+    for age in age_keys:
+        age_data_df[age] = age_data_df[age]/age_data_df['Total']
+    age_data_df = age_data_df.drop(columns = 'Total')
+    ax2 = age_data_df.plot()
+    ax2.set_ylabel("Age demographics")
+    ax2.set_xlabel("Year")
+    ax2.plot()
+    
+    
+    '''#Below are other plots, that are kept for documentation purposes and DID NOT make it into the presentation
+    sizes = [age_data_df[age_keys[0]][2010]/age_data_df['Total'][2010], age_data_df[age_keys[1]][2010]/age_data_df['Total'][2010], age_data_df[age_keys[2]][2010]/age_data_df['Total'][2010], age_data_df[age_keys[3]][2010]/age_data_df['Total'][2010]]
+    explode = (0,0,0,0)
+    fig1, ax1 = plt.subplots()
+    ax1.pie(sizes, explode=explode, labels=age_keys, autopct='%1.1f%%', shadow=True, startangle=90)
+    ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
+    ax1.title.set_text("Age composition in 2010")
+    plt.show()
+    
+    sizes = [age_data_df[age_keys[0]][2019]/age_data_df['Total'][2019], age_data_df[age_keys[1]][2019]/age_data_df['Total'][2019], age_data_df[age_keys[2]][2019]/age_data_df['Total'][2019], age_data_df[age_keys[3]][2019]/age_data_df['Total'][2019]]
+    explode = (0,0,0,0)
+    fig1, ax1 = plt.subplots()
+    ax1.pie(sizes, explode=explode, labels=age_keys, autopct='%1.1f%%', shadow=True, startangle=90)
+    ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
+    ax1.title.set_text("Age composition in 2019")
+    plt.show()'''
+    
+    '''#Plotting the increase in working class migration
+    #frame_worth = {age_keys[2]: age_data_df[age_keys[2]]}
+    #w_df = pd.DataFrame(frame_worth)
+    w_plot = age_data_df[age_keys[3]].plot(title = "Large increase in old people migrating", rot = 0)
+    w_plot.ticklabel_format(axis = 'y')
     w_plot.set_xlabel("Year")
     w_plot.legend(loc = 'lower right')
-    w_plot.set_ylim((2800000,3400000))
-    w_plot.plot()
+    w_plot.plot()'''
     
-    '''#Plotting sex data, specifically the difference in the male and female migrants
+    #Plotting sex data, specifically the difference in the male and female migrants with bar graphs
     sex_data = get_sex_group_data_allyrs(years,False)
     for year in years:
         sex_data[year] = sex_data[year].sum()
     sex_data_df = pd.DataFrame(sex_data.values(), index = years, columns = ['Male', 'Female'])
     #initial_sex_dif = sex_data_df['Male'][2010] - sex_data_df['Female'][2010]
     #fin_sex_dif = sex_data_df['Male'][2019] - sex_data_df['Female'][2019]
-    sex_data_df['difference'] = sex_data_df['Male'] - sex_data_df['Female']
-    ax = sex_data_df['difference'].plot.bar(rot = 0, title = "Closing gap between Male and Female migrations from 2010 to 2019 in the US.")
-    ax.spines['right'].set_visible(False)
-    ax.spines['top'].set_visible(False)
-    ax.get_legend().remove()
-    ax.set_ylabel('Total male migrants - total female migrants')
-    ax.ticklabel_format(useOffset=False, style='plain', axis='y')
-    ax.plot()'''
+    sex_data_df['Total'] = sex_data_df['Male'] + sex_data_df['Female']
+    sex_data_df['Male'] = sex_data_df['Male']/ sex_data_df['Total']
+    sex_data_df['Female'] = sex_data_df['Female']/ sex_data_df['Total']
+    sex_data_df = sex_data_df.drop(columns = 'Total')
+    ax = sex_data_df.plot(title = 'Male vs female migration percent trends')
+    ax.set_ylabel("Percent of migrants")
+    ax.set_xlabel("Year")
+    ax.plot()
+    
+    
+    '''#Plotting for 2010 pie chart male vs female
+    labels = 'Male', 'Female'
+    sizes = [sex_data_df['Male'][2010], sex_data_df['Female'][2010]]
+    explode = (0,0)
+    fig1, ax1 = plt.subplots()
+    ax1.pie(sizes, explode=explode, labels=labels, autopct='%1.1f%%', shadow=True, startangle=90)
+    ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
+    ax1.title.set_text("Male vs female percent in 2010")
+    plt.show()
+    #Plotting for 2019 pie chart male vs female
+    sizes = [sex_data_df['Male'][2019], sex_data_df['Female'][2019]]
+    explode = (0,0)
+    fig2, ax2 = plt.subplots()
+    ax2.pie(sizes, explode=explode, labels=labels, autopct='%1.1f%%', shadow=True, startangle=90)
+    ax2.title.set_text("Male vs female percent in 2019")
+    ax2.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
+    plt.show()'''
+    
