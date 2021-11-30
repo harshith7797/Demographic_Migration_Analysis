@@ -165,12 +165,18 @@ if  __name__ == '__main__':
     
     for age in age_keys:
         age_data_df[age] = age_data_df[age]/age_data_df['Total']
-    age_data_df = age_data_df.drop(columns = 'Total')
+    '''age_data_df = age_data_df.drop(columns = 'Total')
     ax2 = age_data_df.plot()
     ax2.set_ylabel("Age demographics")
     ax2.set_xlabel("Year")
-    ax2.plot()
+    ax2.plot()'''
     
+    
+    asd = age_data_df[age_keys[3]]
+    ax3 = age_data_df[age_keys[3]].plot(title = "Senior-aged migration")
+    ax3.set_ylabel("Percent of migrants")
+    ax3.set_xlabel("Year")
+    ax3.plot()
     
     '''#Below are other plots, that are kept for documentation purposes and DID NOT make it into the presentation
     sizes = [age_data_df[age_keys[0]][2010]/age_data_df['Total'][2010], age_data_df[age_keys[1]][2010]/age_data_df['Total'][2010], age_data_df[age_keys[2]][2010]/age_data_df['Total'][2010], age_data_df[age_keys[3]][2010]/age_data_df['Total'][2010]]
