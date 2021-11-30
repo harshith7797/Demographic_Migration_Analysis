@@ -729,7 +729,7 @@ if __name__ == '__main__':
     age_group_data = data_2010.get_age_group_data(True)
     sex_data = data_2010.get_key_data('SEX', 'state', False) 
     sex_group_data = data_2010.get_sex_group_data(True)  
-    income_data = data_2010.get_key_data('INDIVIDUAL INCOME','state', False)
+    income_data = data_2010.get_income_group_data(False)
     income_group_data = data_2010.get_income_group_data(True)
     poverty_group_data = data_2010.get_poverty_group_data(True)
     housing_group_data = data_2010.get_housing_group_data(True)
