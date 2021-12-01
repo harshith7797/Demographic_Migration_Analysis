@@ -48,8 +48,9 @@ Basic analysis of migration patterns as well as their related demographic charac
 │   ├── data_analysis.py
 │   ├── __init__.py
 │   ├── age_and_sex_plots.py
-│   ├── population_plots.
+│   ├── population_plots.py
 │   ├── Poverty_gif_plots.py
+│   ├── race_and_education_groups.py
 │   └── README.md
 ├── Visualization_and_plots
 │   └── [...]
