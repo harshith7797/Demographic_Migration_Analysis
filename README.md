@@ -1,6 +1,34 @@
 # Demographic_Migration_Analysis
 Basic analysis of migration patterns as well as their related demographic characteristics. The demographics of focus will be: education, race, sex, population by age, poverty levels, and housing types.
 
+
+## File Structure
+```
+.
+├── README.md
+├── data
+│   └── migration_data
+│       ├── ACSST1Y[2010-2019].S0701_data_with_overlays_2021[...].csv
+│       ├── ACSST1Y[2010-2019].S0701_table_title_2021[...].csv
+│       ├── ACSST1Y[2010-2019].S0701_table_title_2021[...].csv
+│       └── README.md
+├── src
+│   ├── MigrationData.py (Main Data class def) 
+│   ├── data_analysis.py
+│   ├── __init__.py
+│   ├── age_and_sex_plots.py
+│   ├── population_plots.py
+│   ├── Poverty_gif_plots.py
+│   ├── race_and_education_groups.py
+│   ├── normalized_plots.py
+│   ├── *_group_analysis.py (specific group's normalized analysis scripts)
+│   └── README.md
+├── Visualization_and_plots
+│   └── [...]
+├──.gitignore
+└── env.yaml
+```
+
 # Data
 - [American Community Survey (in-depth demographic and migration data)](https://data.census.gov/cedsci/table?t=International%20and%20Domestic%20Migration%3APopulation%20Change%20and%20Components&g=0100000US%240400000&tid=ACSST1Y2019.S0701)
 
@@ -32,33 +60,6 @@ Basic analysis of migration patterns as well as their related demographic charac
 - Housing Tenure
   - Owner occupied
   - Renter occupied
-
-## File Structure
-```
-.
-├── README.md
-├── data
-│   └── migration_data
-│       ├── ACSST1Y[2010-2019].S0701_data_with_overlays_2021[...].csv
-│       ├── ACSST1Y[2010-2019].S0701_table_title_2021[...].csv
-│       ├── ACSST1Y[2010-2019].S0701_table_title_2021[...].csv
-│       └── README.md
-├── src
-│   ├── MigrationData.py (Main Data class def) 
-│   ├── data_analysis.py
-│   ├── __init__.py
-│   ├── age_and_sex_plots.py
-│   ├── population_plots.py
-│   ├── Poverty_gif_plots.py
-│   ├── race_and_education_groups.py
-│   ├── normalized_plots.py
-│   ├── *_group_analysis.py (specific group's normalized analysis scripts)
-│   └── README.md
-├── Visualization_and_plots
-│   └── [...]
-├──.gitignore
-└── env.yaml
-```
 
 ## Data Processing File Structure
 1. Create functions to process each demographic
