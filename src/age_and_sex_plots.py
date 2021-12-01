@@ -8,9 +8,10 @@ Using "wdir='*/Demographic_Migration_Analysis/src'"
 
 Basic data processing and importing. A pyplot call is used, and one image is created.
 
+TODO: remove the shades from the pie charts, breakup the years
 """
 
-from src.MigrationData import MigrationData
+from MigrationData import MigrationData
 import pandas as pd
 import matplotlib.pyplot as plt
 #import numpy as np
@@ -163,37 +164,37 @@ if  __name__ == '__main__':
     y_plot.set_xlabel("Year")
     y_plot.plot()'''
     
-    for age in age_keys:
+    '''for age in age_keys:
         age_data_df[age] = age_data_df[age]/age_data_df['Total']
-    '''age_data_df = age_data_df.drop(columns = 'Total')
+    age_data_df = age_data_df.drop(columns = 'Total')
     ax2 = age_data_df.plot()
     ax2.set_ylabel("Age demographics")
     ax2.set_xlabel("Year")
     ax2.plot()'''
     
     
-    asd = age_data_df[age_keys[3]]
-    ax3 = age_data_df[age_keys[3]].plot(title = "Senior-aged migration")
-    ax3.set_ylabel("Percent of migrants")
+    '''age_data_seniors = age_data_df[age_keys[3]]/age_data_df[age_keys[3]][2019]
+    ax3 = age_data_seniors.plot(title = "Senior-aged migration")
+    ax3.set_ylabel("Percent of migrants as a proportion of 2019")
     ax3.set_xlabel("Year")
-    ax3.plot()
+    ax3.plot()'''
     
-    '''#Below are other plots, that are kept for documentation purposes and DID NOT make it into the presentation
+    #Below are other plots, that are kept for documentation purposes and DID NOT make it into the presentation
     sizes = [age_data_df[age_keys[0]][2010]/age_data_df['Total'][2010], age_data_df[age_keys[1]][2010]/age_data_df['Total'][2010], age_data_df[age_keys[2]][2010]/age_data_df['Total'][2010], age_data_df[age_keys[3]][2010]/age_data_df['Total'][2010]]
     explode = (0,0,0,0)
-    fig1, ax1 = plt.subplots()
-    ax1.pie(sizes, explode=explode, labels=age_keys, autopct='%1.1f%%', shadow=True, startangle=90)
-    ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
-    ax1.title.set_text("Age composition in 2010")
+    fig4, ax4 = plt.subplots()
+    ax4.pie(sizes, explode=explode, labels=age_keys, autopct='%1.1f%%', startangle=90)
+    ax4.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
+    ax4.title.set_text("Age composition in 2010")
     plt.show()
     
     sizes = [age_data_df[age_keys[0]][2019]/age_data_df['Total'][2019], age_data_df[age_keys[1]][2019]/age_data_df['Total'][2019], age_data_df[age_keys[2]][2019]/age_data_df['Total'][2019], age_data_df[age_keys[3]][2019]/age_data_df['Total'][2019]]
     explode = (0,0,0,0)
-    fig1, ax1 = plt.subplots()
-    ax1.pie(sizes, explode=explode, labels=age_keys, autopct='%1.1f%%', shadow=True, startangle=90)
-    ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
-    ax1.title.set_text("Age composition in 2019")
-    plt.show()'''
+    fig4, ax4 = plt.subplots()
+    ax4.pie(sizes, explode=explode, labels=age_keys, autopct='%1.1f%%', startangle=90)
+    ax4.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
+    ax4.title.set_text("Age composition in 2019")
+    plt.show()
     
     '''#Plotting the increase in working class migration
     #frame_worth = {age_keys[2]: age_data_df[age_keys[2]]}
@@ -209,7 +210,7 @@ if  __name__ == '__main__':
     for year in years:
         sex_data[year] = sex_data[year].sum()
     sex_data_df = pd.DataFrame(sex_data.values(), index = years, columns = ['Male', 'Female'])
-    #initial_sex_dif = sex_data_df['Male'][2010] - sex_data_df['Female'][2010]
+    '''#initial_sex_dif = sex_data_df['Male'][2010] - sex_data_df['Female'][2010]
     #fin_sex_dif = sex_data_df['Male'][2019] - sex_data_df['Female'][2019]
     sex_data_df['Total'] = sex_data_df['Male'] + sex_data_df['Female']
     sex_data_df['Male'] = sex_data_df['Male']/ sex_data_df['Total']
@@ -218,15 +219,15 @@ if  __name__ == '__main__':
     ax = sex_data_df.plot(title = 'Male vs female migration percent trends')
     ax.set_ylabel("Percent of migrants")
     ax.set_xlabel("Year")
-    ax.plot()
+    ax.plot()'''
     
-    
-    '''#Plotting for 2010 pie chart male vs female
+    '''
+    #Plotting for 2010 pie chart male vs female
     labels = 'Male', 'Female'
     sizes = [sex_data_df['Male'][2010], sex_data_df['Female'][2010]]
     explode = (0,0)
     fig1, ax1 = plt.subplots()
-    ax1.pie(sizes, explode=explode, labels=labels, autopct='%1.1f%%', shadow=True, startangle=90)
+    ax1.pie(sizes, explode=explode, labels=labels, autopct='%1.1f%%', startangle=90)
     ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
     ax1.title.set_text("Male vs female percent in 2010")
     plt.show()
@@ -234,7 +235,7 @@ if  __name__ == '__main__':
     sizes = [sex_data_df['Male'][2019], sex_data_df['Female'][2019]]
     explode = (0,0)
     fig2, ax2 = plt.subplots()
-    ax2.pie(sizes, explode=explode, labels=labels, autopct='%1.1f%%', shadow=True, startangle=90)
+    ax2.pie(sizes, explode=explode, labels=labels, autopct='%1.1f%%', startangle=90)
     ax2.title.set_text("Male vs female percent in 2019")
     ax2.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
     plt.show()'''
