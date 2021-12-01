@@ -1,10 +1,26 @@
 # Demographic_Migration_Analysis
 Basic analysis of migration patterns as well as their related demographic characteristics. The demographics of focus will be: education, race, sex, population by age, poverty levels, and housing types.
 
+Setup: 
+- Install the packages or use conda to setup environment with env.yml file 
+- All the scripts are located in src folder 
+
 To Generate Plots:
-- Normalized Plots for all categories: normalized_plots.py
-- Geographic map of overal stats: population_plots.py
--  
+- To fetch the data year wise: ./src/MigrationData.py
+- Normalized Plots for all categories: ./src/normalized_plots.py
+- Geographic map of overal stats: ./src/population_plots.py
+- Income related plots: ./src/income_plots.py 
+- Race and Education Analysis: ./src/race_and_education_groups.py
+- Age and Sex plots: ./src/age_and_sex_plots.py
+- Poverty: ./src/poverty_gif_plots.py 
+- Normalized Analysis group wise: 
+  - ./src/age_group_analysis.py
+  - ./src/sex_group_analysis.py
+  - ./src/income_group_analysis.py
+  - ./src/education_group_analysis.py
+  - ./src/race_group_analysis.py
+  - ./src/poverty_group_analysis.py
+  - ./src/housing_group_analysis.py
 
 ## File Structure
 ```
