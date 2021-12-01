@@ -44,13 +44,15 @@ Basic analysis of migration patterns as well as their related demographic charac
 │       ├── ACSST1Y[2010-2019].S0701_table_title_2021[...].csv
 │       └── README.md
 ├── src
-│   ├── MigrationData.py
+│   ├── MigrationData.py (Main Data class def) 
 │   ├── data_analysis.py
 │   ├── __init__.py
 │   ├── age_and_sex_plots.py
 │   ├── population_plots.py
 │   ├── Poverty_gif_plots.py
 │   ├── race_and_education_groups.py
+│   ├── normalized_plots.py
+│   ├── *_group_analysis.py (specific group's normalized analysis scripts)
 │   └── README.md
 ├── Visualization_and_plots
 │   └── [...]
