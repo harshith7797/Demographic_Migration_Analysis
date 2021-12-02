@@ -7,7 +7,7 @@ Setup:
 
 To Generate Plots:
 - Normalized Plots: 
-  - normalized_plots.ipynb
+  - ./src/normalized_plots.ipynb
 
 
 Scripts Usage:
