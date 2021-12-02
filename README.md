@@ -8,6 +8,8 @@ Setup:
 To Generate Plots:
 - Normalized Plots: 
   - ./src/normalized_plots.ipynb
+- Age and sex plots:
+  - ./src/age_and_sex_plots.py 
 
 
 Scripts Usage:
