@@ -6,6 +6,11 @@ Setup:
 - All the scripts are located in src folder 
 
 To Generate Plots:
+- Normalized Plots: 
+  - normalized_plots.ipynb
+
+
+Scripts Usage:
 - To fetch the data year wise: ./src/MigrationData.py
 - Normalized Plots for all categories: ./src/normalized_plots.py
 - Geographic map of overal stats: ./src/population_plots.py
@@ -78,17 +83,3 @@ To Generate Plots:
   - Owner occupied
   - Renter occupied
 
-## Data Processing File Structure
-1. Create functions to process each demographic
-    1. clubbing (combining) some data
-    2. removing irrelevant data
-    3. make the state as rows
-    4. demographics as columns
-2. Create functions to get fastest and slowest growing states
-
-~~More to be added--this is just the basic data engineering that needs to be done. Possible future functions to be added:~~
-~~- top/bottom 10 states~~
-~~- sorting~~
-~~- averaging~~ 
-
-It has been decided that at the moment the data engineering file is more than sufficient for the task of data analysis.
