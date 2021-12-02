@@ -28,25 +28,22 @@ To Generate Plots:
 ├── README.md
 ├── data
 │   └── migration_data
-│       ├── ACSST1Y[2010-2019].S0701_data_with_overlays_2021[...].csv
-│       ├── ACSST1Y[2010-2019].S0701_table_title_2021[...].csv
-│       ├── ACSST1Y[2010-2019].S0701_table_title_2021[...].csv
+│       ├── ACSST1Y[2010-2019].S0701_data_with_overlays_[...].csv       --> Year Wise Data 
+│       ├── ...
 │       └── README.md
 ├── src
-│   ├── MigrationData.py (Main Data class def) 
-│   ├── data_analysis.py
-│   ├── __init__.py
-│   ├── age_and_sex_plots.py
-│   ├── population_plots.py
-│   ├── Poverty_gif_plots.py
-│   ├── race_and_education_groups.py
-│   ├── normalized_plots.py
-│   ├── *_group_analysis.py (specific group's normalized analysis scripts)
+│   ├── MigrationData.py                         --> Main Data class def (functions to fetch data)
+│   ├── age_and_sex_plots.py                     --> Age and Sex data analysis
+│   ├── population_plots.py                      --> Overall state level migration trend 
+│   ├── Poverty_gif_plots.py                     --> Poverty data analysis
+│   ├── race_and_education_groups.py             --> Race and Education data analysis 
+│   ├── normalized_plots.py                      --> Generate normalized plots for all categories
+│   ├── *_group_analysis.py                      --> specific group's normalized analysis script
 │   └── README.md
 ├── Visualization_and_plots
-│   └── [...]
+│   └── [...]                                    --> Generated Plots 
 ├──.gitignore
-└── env.yaml
+└── env.yaml                                     --> Package requirements/conda env setup 
 ```
 
 # Data
