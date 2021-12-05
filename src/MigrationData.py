@@ -434,6 +434,105 @@ class MigrationData:
         else:
             return age_df
 
+    def get_age_country_data(self,in_percentage):
+        '''
+        Function to query the age group data from the loaded data frame
+        Different columns are clubbed to form the below groups: 
+            1. 1 to 17 years
+            2. 18 to 24 years
+            3. 25 to 54 years
+            4. 55 years and above
+        Parameters
+        ----------
+        in_percentage : bool
+            boolean value determines if the output needs to be in percentage form or not
+
+        Returns
+        -------
+        age_df : pd.core.frame.DataFrame 
+            age data grouped into the above categories 
+
+        '''
+        assert(isinstance(in_percentage,bool))
+        assert(not self.dframe.empty)
+        age_data = self.get_key_data('AGE','state', False)
+        age_total = self.get_key_data('AGE','Total', False)
+        age_df_total = pd.DataFrame(index = age_data.index)
+        age_df       = pd.DataFrame(index = age_data.index)
+        list_1_to_17 = ['1 to 4 years', '5 to 17 years']
+        list_18_to_24 = ['18 to 24 years']
+        list_25_to_54 = ['25 to 34 years', '35 to 44 years', '45 to 54 years']
+        list_55_and_over = ['55 to 64 years','65 to 74 years','75 years and over']
+        
+        keys_1_to_17 = self.query_group_keys(age_data, list_1_to_17)
+        keys_1_to_17_total = self.query_group_keys(age_total, list_1_to_17)
+        age_df['1 to 17 years'] = age_data[keys_1_to_17[0]] + age_data[keys_1_to_17[1]]
+        age_df_total['1 to 17 years'] = age_total[keys_1_to_17_total[0]] + age_total[keys_1_to_17_total[1]]
+        
+        keys_18_to_24 = self.query_group_keys(age_data, list_18_to_24)
+        keys_18_to_24_total = self.query_group_keys(age_total, list_18_to_24)
+        age_df['18 to 24 years'] = age_data[keys_18_to_24[0]]
+        age_df_total['18 to 24 years'] = age_total[keys_18_to_24_total[0]] 
+        
+        keys_25_to_54 = self.query_group_keys(age_data, list_25_to_54)
+        keys_25_to_54_total = self.query_group_keys(age_total, list_25_to_54)
+        age_df['25 to 54 years'] = age_data[keys_25_to_54[0]] + age_data[keys_25_to_54[1]] + age_data[keys_25_to_54[2]]
+        age_df_total['25 to 54 years'] = age_total[keys_25_to_54_total[0]] + age_total[keys_25_to_54_total[1]]+ age_total[keys_25_to_54_total[2]]
+        
+        keys_55_and_over = self.query_group_keys(age_data, list_55_and_over)
+        keys_55_and_over_total = self.query_group_keys(age_total, list_55_and_over)
+        age_df['55 years and over'] = age_data[keys_55_and_over[0]] + age_data[keys_55_and_over[1]]+ age_data[keys_55_and_over[2]]
+        age_df_total['55 years and over'] = age_total[keys_55_and_over_total[0]] + age_total[keys_55_and_over_total[1]]+ age_total[keys_55_and_over_total[2]]
+        
+        age_country = age_df.sum(axis = 0)
+        age_total = age_df_total.sum(axis = 0)
+        
+        if in_percentage: 
+            for col in age_country.keys():
+                age_country[col] = 100*age_country[col]/age_total[col]
+        return age_country
+
+    # def get_sex_country_data(self,in_percentage):
+    #     '''
+    #     Function to query sex group data
+    #     Data is given in below categories:
+    #         1. Male
+    #         2. Female
+
+    #     Parameters
+    #     ----------
+    #     in_percentage : bool
+    #         boolean value determines if the output needs to be in percentage form or not
+
+    #     Returns
+    #     -------
+    #     sex_data : pd.core.frame.DataFrame 
+    #         sex data grouped into the above categories 
+
+    #     '''
+    #     assert(isinstance(in_percentage,bool))
+    #     assert(not self.dframe.empty)
+    #     keys = ['Male', 'Female']
+        
+    #     sex_data = data_2010.get_key_data('SEX','state', False)
+    #     grp_keys = data_2010.query_group_keys(sex_data, keys)
+    #     rename_dict = {grp_keys[0]:"Male", grp_keys[1]:"Female"}
+    #     sex_data = sex_data.rename(columns = rename_dict)
+        
+    #     sex_total_data = data_2010.get_key_data('SEX','Total', False)
+    #     grp_keys = data_2010.query_group_keys(sex_total_data, keys)
+    #     rename_dict = {grp_keys[0]:"Male", grp_keys[1]:"Female"}
+    #     sex_total_data = sex_total_data.rename(columns = rename_dict)
+        
+    #     sex_country = sex_data.sum(axis = 0)
+    #     sex_total = sex_total_data.sum(axis = 0)
+        
+    #     if in_percentage: 
+    #         for col in sex_country.keys():
+    #             sex_country[col] = 100*sex_country[col]/sex_total[col]
+    #     sex_country = pd.DataFrame(sex_country)
+    #     return sex_country
+
     def get_sex_group_data(self,in_percentage):
         '''
         Function to query sex group data
@@ -461,6 +560,46 @@ class MigrationData:
         
         sex_data = sex_data.rename(columns = rename_dict)
         return sex_data
+
+    def get_sex_country_data(self,in_percentage):
+        '''
+        Function to query sex group data
+        Data is given in below categories:
+            1. Male
+            2. Female
+
+        Parameters
+        ----------
+        in_percentage : bool
+            boolean value determines if the output needs to be in percentage form or not
+
+        Returns
+        -------
+        sex_data : pd.core.frame.DataFrame 
+            sex data grouped into the above categories 
+
+        '''
+        assert(isinstance(in_percentage,bool))
+        assert(not self.dframe.empty)
+        keys = ['Male', 'Female']
+        
+        sex_data = self.get_key_data('SEX','state', False)
+        grp_keys = self.query_group_keys(sex_data, keys)
+        rename_dict = {grp_keys[0]:"Male", grp_keys[1]:"Female"}
+        sex_data = sex_data.rename(columns = rename_dict)
+        
+        sex_total_data = self.get_key_data('SEX','Total', False)
+        grp_keys = self.query_group_keys(sex_total_data, keys)
+        rename_dict = {grp_keys[0]:"Male", grp_keys[1]:"Female"}
+        sex_total_data = sex_total_data.rename(columns = rename_dict)
+        
+        sex_country = sex_data.sum(axis = 0)
+        sex_total = sex_total_data.sum(axis = 0)
+        
+        if in_percentage: 
+            for col in sex_country.keys():
+                sex_country[col] = 100*sex_country[col]/sex_total[col]
+        return sex_country
     
     def get_income_group_data(self,in_percentage):
         '''
@@ -520,6 +659,66 @@ class MigrationData:
             return income_df 
         else:
             return income_df
+    
+    def get_income_country_data(self,in_percentage):
+        '''
+        Function to query the income group data 
+        Data is given in below categories:
+            1. Loss or $1 to $34,999
+            2. $35,000 to $49,999
+            3. $50,000 to $74,999
+            4. $75,000 or more 
+    
+        Parameters
+        ----------
+        in_percentage : bool
+            boolean value determines if the output needs to be in percentage form or not
+    
+        Returns
+        -------
+        income_df : pd.core.frame.DataFrame 
+            income data grouped into the above categories
+    
+        '''
+        assert(isinstance(in_percentage,bool))
+        assert(not self.dframe.empty)
+        income_data = self.get_key_data('INDIVIDUAL INCOME','state', False)
+        income_data_total = self.get_key_data('INDIVIDUAL INCOME','Total', False)
+        income_df_total = pd.DataFrame(index = income_data.index)
+        income_df       = pd.DataFrame(index = income_data.index)
+        
+        list_1_to_35 = ['$1 to $9,999','$10,000 to $14,999', '$15,000 to $24,999', '$25,000 to $34,999']
+        list_35_to_50 = ['$35,000 to $49,999']
+        list_50_to_75 = ['$50,000 to $64,999','$65,000 to $74,999']
+        list_75_and_over = ['$75,000 or more']
+
+        keys_1_to_35 = self.query_group_keys(income_data, list_1_to_35)
+        keys_1_to_35_total = self.query_group_keys(income_data_total, list_1_to_35)
+        income_df['loss or $1 to $34,999'] = income_data[keys_1_to_35[0]] + income_data[keys_1_to_35[1]] + income_data[keys_1_to_35[2]] + income_data[keys_1_to_35[3]]
+        income_df_total['loss or $1 to $34,999'] = income_data_total[keys_1_to_35_total[0]] + income_data_total[keys_1_to_35_total[1]] + income_data_total[keys_1_to_35_total[2]] + income_data_total[keys_1_to_35_total[3]]
+        
+        keys_35_to_50 = self.query_group_keys(income_data, list_35_to_50)
+        keys_35_to_50_total = self.query_group_keys(income_data_total, list_35_to_50)
+        income_df['$35,000 to $49,999'] = income_data[keys_35_to_50[0]]
+        income_df_total['$35,000 to $49,999'] = income_data_total[keys_35_to_50_total[0]]
+        
+        keys_50_to_75 = self.query_group_keys(income_data, list_50_to_75)
+        keys_50_to_75_total = self.query_group_keys(income_data_total, list_50_to_75)
+        income_df['$50,000 to $74,999'] = income_data[keys_50_to_75[0]] + income_data[keys_50_to_75[1]]
+        income_df_total['$50,000 to $74,999'] = income_data_total[keys_50_to_75_total[0]] + income_data_total[keys_50_to_75_total[1]]
+        
+        keys_75_and_over = self.query_group_keys(income_data, list_75_and_over)
+        keys_75_and_over_total = self.query_group_keys(income_data_total, list_75_and_over)
+        income_df['$75,000 and over'] = income_data[keys_75_and_over[0]]
+        income_df_total['$75,000 and over'] = income_data_total[keys_75_and_over_total[0]]
+        
+        income_country = income_df.sum(axis = 0)
+        income_total = income_df_total.sum(axis = 0)
+        
+        if in_percentage: 
+            for col in income_country.keys():
+                income_country[col] = 100*income_country[col]/income_total[col]
+        return income_country
 
     def get_poverty_group_data(self,in_percentage):
         '''
@@ -549,6 +748,52 @@ class MigrationData:
         
         poverty_data = poverty_data.rename(columns = rename_dict)
         return poverty_data[keys]
+
+    def get_poverty_country_data(self,in_percentage):
+        '''
+        Function to query the poverty status group data 
+        Data is given in below categories:
+            1. Below 100 percent of the poverty level
+            2. 100 to 150 percent of poverty level 
+            3. above 150 percent of poverty level 
+
+        Parameters
+        ----------
+        in_percentage : bool
+            boolean value determines if the output needs to be in percentage form or not
+
+        Returns
+        -------
+        pd.core.frame.DataFrame 
+            poverty status data grouped into the above categories
+
+        '''
+        assert(not self.dframe.empty)
+        assert(isinstance(in_percentage,bool))
+        poverty_data = self.get_key_data('POVERTY STATUS','state', False)
+        keys = ['Below 100 percent', '100 to 149 percent', 'above 150 percent']
+        grp_keys = self.query_group_keys(poverty_data, keys)
+        rename_dict = {grp_keys[0]:"Below 100 percent", grp_keys[1]:"100 to 149 percent", grp_keys[2]:"above 150 percent"}
+        poverty_data = poverty_data.rename(columns = rename_dict)
+        poverty_data.iloc[: , 1:]
+        
+        poverty_data_total = self.get_key_data('POVERTY STATUS','Total', False)
+        keys = ['Below 100 percent', '100 to 149 percent', 'above 150 percent']
+        grp_keys = self.query_group_keys(poverty_data_total, keys)
+        rename_dict = {grp_keys[0]:"Below 100 percent", grp_keys[1]:"100 to 149 percent", grp_keys[2]:"above 150 percent"}
+        poverty_data_total = poverty_data_total.rename(columns = rename_dict)
+        poverty_data_total.iloc[: , 1:]
+        
+        poverty_country = poverty_data.sum(axis = 0)
+        poverty_data_total = poverty_data_total.sum(axis = 0)
+        poverty_keys = ["Below 100 percent", "100 to 149 percent","above 150 percent"]
+        poverty_country = poverty_country[poverty_keys]
+        poverty_data_total = poverty_data_total[poverty_keys]
+        
+        if in_percentage: 
+            for col in poverty_country.keys():
+                poverty_country[col] = 100*poverty_country[col]/poverty_data_total[col]
+        return poverty_country
     
     def get_housing_group_data(self,in_percentage):
         '''
@@ -577,6 +822,49 @@ class MigrationData:
         
         housing_data = housing_data.rename(columns = rename_dict)
         return housing_data[keys]
+
+    def get_housing_country_data(self,in_percentage):
+        '''
+        Function to query housing group data 
+        Data is given in below categories:
+            1. Owner-Owned 
+            2. Renter-Owned 
+
+        Parameters
+        ----------
+        in_percentage : bool
+            boolean value determines if the output needs to be in percentage form or not
+
+        Returns
+        -------
+        pd.core.frame.DataFrame 
+            housing group data grouped into the above categories
+
+        '''
+        assert(not self.dframe.empty)
+        assert(isinstance(in_percentage,bool))
+        housing_data = self.get_key_data('HOUSING TENURE','state', False)
+        keys = ['owner-occupied', 'renter-occupied']
+        grp_keys = self.query_group_keys(housing_data, keys)
+        rename_dict = {grp_keys[0]:"owner-occupied", grp_keys[1]:"renter-occupied"}
+        housing_data = housing_data.rename(columns = rename_dict)
+        
+        housing_data_total = self.get_key_data('HOUSING TENURE','Total', False)
+        keys = ['owner-occupied', 'renter-occupied']
+        grp_keys = self.query_group_keys(housing_data_total, keys)
+        rename_dict = {grp_keys[0]:"owner-occupied", grp_keys[1]:"renter-occupied"}
+        housing_data_total = housing_data_total.rename(columns = rename_dict)
+        
+        housing_country = housing_data.sum(axis = 0)
+        housing_total = housing_data_total.sum(axis = 0)
+        housing_keys = ["owner-occupied","renter-occupied"]
+        housing_country = housing_country[housing_keys]
+        housing_total = housing_total[housing_keys]
+        
+        if in_percentage: 
+            for col in housing_country.keys():
+                housing_country[col] = 100*housing_country[col]/housing_total[col]
+        return housing_country
     
     def get_education_group_data(self,in_percentage):
         '''
@@ -629,7 +917,73 @@ class MigrationData:
             return ea_df 
         else:
             return ea_df
-    
+
+    def get_education_country_data(self,in_percentage):
+        '''
+        Function to query educational attainment data 
+        Data is grouped into below categories:
+            1. High School and below
+            2. Some College or Associate Degree
+            3. Bachelors Degree and above
+
+        Parameters
+        ----------
+        in_percentage : bool
+            boolean value determines if the output needs to be in percentage form or not
+
+        Returns
+        -------
+        pd.core.frame.DataFrame 
+            educational attainment data grouped into the above categories
+
+        '''
+        assert(not self.dframe.empty)
+        assert(isinstance(in_percentage,bool))
+        ea_data = self.get_key_data('EDUCATIONAL ATTAINMENT','state', False)
+        ea_data_total = self.get_key_data('EDUCATIONAL ATTAINMENT','Total', False)
+        ea_df_total = pd.DataFrame(index = ea_data.index)
+        ea_df       = pd.DataFrame(index = ea_data.index)
+        
+        list_1 = ['Less than high school']
+        list_1a = ['High school graduate']
+        list_2 = ['Some college']
+        list_3 = ['Bachelor']
+        list_3a = ['professional']
+        
+
+        keys_1 = self.query_group_keys(ea_data, list_1)
+        keys_1_total = self.query_group_keys(ea_data_total, list_1)
+        ea_df['Less than high school'] = ea_data[keys_1[0]]
+        ea_df_total['Less than high school'] = ea_data_total[keys_1_total[0]]
+        
+        keys_1a = self.query_group_keys(ea_data, list_1a)
+        keys_1a_total = self.query_group_keys(ea_data_total, list_1a)
+        ea_df['High school graduate'] = ea_data[keys_1a[0]]
+        ea_df_total['High school graduate'] = ea_data_total[keys_1a_total[0]]
+        
+        keys_2 = self.query_group_keys(ea_data, list_2)
+        keys_2_total = self.query_group_keys(ea_data_total, list_2)
+        ea_df['Some College or Associate Degree'] = ea_data[keys_2[0]]
+        ea_df_total['Some College or Associate Degree'] = ea_data_total[keys_2_total[0]]
+        
+        keys_3 = self.query_group_keys(ea_data, list_3)
+        keys_3_total = self.query_group_keys(ea_data_total, list_3)
+        ea_df['Bachelors Degree'] = ea_data[keys_3[0]]
+        ea_df_total['Bachelors Degree'] = ea_data_total[keys_3_total[0]]
+        
+        keys_3a = self.query_group_keys(ea_data, list_3a)
+        keys_3a_total = self.query_group_keys(ea_data_total, list_3a)
+        ea_df['Professional Degree'] = ea_data[keys_3a[0]]
+        ea_df_total['Professional Degree'] = ea_data_total[keys_3a_total[0]]
+        
+        ea_country = ea_df.sum(axis = 0)
+        ea_df_total = ea_df_total.sum(axis = 0)
+        
+        if in_percentage: 
+            for col in ea_country.keys():
+                ea_country[col] = 100*ea_country[col]/ea_df_total[col]
+        return ea_country
+        
     def get_race_group_data(self,in_percentage):
         '''
         Function to query race group data
@@ -654,86 +1008,121 @@ class MigrationData:
         assert(not self.dframe.empty)
         assert(isinstance(in_percentage,bool))
         race_data = self.get_key_data('RACE','state', in_percentage)
-        keys = ['!!White','Black', 'Hispanic or Latino origin (of any race)','Asian', 'American Indian and Alaska Native', 'Some other race', 'Native Hawaiian and Other Pacific Islander']
+        keys = ['!!White','Black', 'Hispanic or Latino origin (of any race)','Asian', 'American Indian and Alaska Native', 'Two or more races', 'Some other race', 'Native Hawaiian and Other Pacific Islander']
         grp_keys = self.query_group_keys(race_data, keys)
         #print(grp_keys)
         race_data = race_data[grp_keys]
-        rename_dict = {grp_keys[0]:"White", grp_keys[1]:"Black or African American", grp_keys[2]:"Hipanic or Latino", grp_keys[3]:"Asian", grp_keys[4]: "Other1" , grp_keys[5]:"Other2", grp_keys[6]: "Other3"}
+        rename_dict = {grp_keys[0]:"White", grp_keys[1]:"Black or African American", grp_keys[2]:"Hipanic or Latino", grp_keys[3]:"Asian", grp_keys[4]: "Other1" , grp_keys[5]:"Other2", grp_keys[6]: "Other3", grp_keys[7]: "Other4"}
         race_data = race_data.rename(columns = rename_dict)
-        race_data["Other"] = race_data["Other1"] + race_data["Other2"] + race_data["Other3"]
-        race_data = race_data.drop( columns = ["Other1", "Other2", "Other3"])
+        race_data["Other"] = race_data["Other1"] + race_data["Other2"] + race_data["Other3"] + race_data["Other4"]
+        race_data = race_data.drop( columns = ["Other1", "Other2", "Other3", "Other4"])
         return race_data
-    
-    @staticmethod
-    def get_fastest_growing_5():
+
+    def get_race_country_data(self,in_percentage):
         '''
-        Function to get the fastest growing 5 states
-        
+        Function to query race group data
+        Data is grouped into below categories:
+            1. White
+            2. Black or African American
+            3. Hispanic or Latino 
+            4. Asian
+            5. Other
+
+        Parameters
+        ----------
+        in_percentage : bool
+            boolean value determines if the output needs to be in percentage form or not
+
         Returns
         -------
-        top_5: tuple
-            Returns a tuple of the 5 fastest growing states 
-        
+        race_data : pd.core.frame.DataFrame 
+            race data grouped into the above categories (moving from a different state to the given row/state)
+
         '''
-        top_5 = MigrationData.sorted_states_by_population_growth()[46:51]
-        return top_5
-           
-    @staticmethod
-    def get_slowest_growing_5():
-        '''
-        Function to return the slowest growing 5 states. 
+        assert(not self.dframe.empty)
+        assert(isinstance(in_percentage,bool))
+        race_data = self.get_key_data('RACE','state', False)
+        keys = ['!!White','Black', 'Hispanic or Latino origin (of any race)','Asian', 'American Indian and Alaska Native', 'Two or more races', 'Some other race', 'Native Hawaiian and Other Pacific Islander']
+        grp_keys = self.query_group_keys(race_data, keys)
+        #print(grp_keys)
+        race_data = race_data[grp_keys]
+        rename_dict = {grp_keys[0]:"White", grp_keys[1]:"Black or African American", grp_keys[2]:"Hipanic or Latino", grp_keys[3]:"Asian", grp_keys[4]: "Other1" , grp_keys[5]:"Other2", grp_keys[6]: "Other3", grp_keys[7]: "Other4"}
+        race_data = race_data.rename(columns = rename_dict)
+        race_data["Other"] = race_data["Other1"] + race_data["Other2"] + race_data["Other3"] + race_data["Other4"]
+        race_data = race_data.drop( columns = ["Other1", "Other2", "Other3", "Other4"])
         
+        race_data_total = self.get_key_data('RACE','Total', False)
+        keys = ['!!White','Black', 'Hispanic or Latino origin (of any race)','Asian', 'American Indian and Alaska Native', 'Two or more races', 'Some other race', 'Native Hawaiian and Other Pacific Islander']
+        grp_keys = self.query_group_keys(race_data_total, keys)
+        #print(grp_keys)
+        race_data_total = race_data_total[grp_keys]
+        rename_dict = {grp_keys[0]:"White", grp_keys[1]:"Black or African American", grp_keys[2]:"Hipanic or Latino", grp_keys[3]:"Asian", grp_keys[4]: "Other1" , grp_keys[5]:"Other2", grp_keys[6]: "Other3", grp_keys[7]: "Other4"}
+        race_data_total = race_data_total.rename(columns = rename_dict)
+        race_data_total["Other"] = race_data_total["Other1"] + race_data_total["Other2"] + race_data_total["Other3"] + race_data_total["Other4"]
+        race_data_total = race_data_total.drop( columns = ["Other1", "Other2", "Other3", "Other4"])
+        
+        race_country = race_data.sum(axis = 0)
+        race_total = race_data_total.sum(axis = 0)
+        
+        if in_percentage: 
+            for col in race_country.keys():
+                race_country[col] = 100*race_country[col]/race_total[col]
+        race_country = pd.DataFrame(race_country)
+        return race_country
+
+    def get_population_stats(self):
+        '''
+        Function to return overall population statistics of the current Migration Data object
+
         Returns
         -------
-        lowest_5: tuple
-            Returns a tople of the slowest growing states
-        
+        population : pd.core.frame.DataFrame 
+            population numbers and percentages along with the state information.
+
         '''
-        lowest_5 = MigrationData.sorted_states_by_population_growth()[0:5]
-        return lowest_5
-    
-    @staticmethod
-    def sorted_states_by_population_growth():
-        '''
-        Function that returns the sorted states by population from least to greatest by proportion
+        assert(not self.dframe.empty)
         
-        Returns
-        -------
-        states: series
-            series with the index: states and columns: populations; sorted
+        if self.year > 2017:
+            key_str = 'Estimate!!Moved; from different  state!!Population 1 year and over'
+        else:
+            key_str = 'Moved; from different  state!!Estimate!!Population 1 year and over'
+        pop_key = self.get_key(self.dframe, key_str)
         
-        '''
-        _2010 = MigrationData(2010)
-        _2010.load_dframe()
-        _2019 = MigrationData(2019)
-        _2019.load_dframe()
-        _2010df = _2010.dframe.set_index('Geographic Area Name')
-        _2010df =_2010df.drop(['Puerto Rico'])
-        _2010df = _2010df['Total!!Estimate!!Population 1 year and over']
-        _2010df = _2010df.astype('int32')
-        _2019df = _2019.dframe.set_index('Geographic Area Name')
-        _2019df = _2019df.drop(['Puerto Rico'])
-        _2019df = _2019df['Estimate!!Total!!Population 1 year and over']
-        _2019df = _2019df.astype('int32')
-        total = pd.DataFrame({"Population2010":_2010df, "Population2019":_2019df})
-        total["Percent Change"] = total["Population2019"]/ total["Population2010"]
-        states = total.sort_values(by="Percent Change", axis = 0).index
-        return states
+        if self.year > 2017:
+            key_str = 'Estimate!!Total!!Population 1 year and over'
+        else:
+            key_str = 'Total!!Estimate!!Population 1 year and over'
+        pop_total_key = self.get_key(self.dframe, key_str)
+        
+        population_keys = ['Geographic Area Name', pop_key, pop_total_key]
+        population = self.dframe[population_keys].rename(columns = {"Geographic Area Name":"state", pop_key:'population', pop_total_key:'population_total'})
+        population['population_total'] = (population['population_total'].astype(float)).mul(population['population'].astype(float))//100
+        return population
         
 if __name__ == '__main__':
-    data_2010 = MigrationData(2010)
+    data_2010 = MigrationData(2018)
     data_2010.load_dframe()
-    fastest_growing = MigrationData.get_fastest_growing_5()
-    slowest_growing = MigrationData.get_slowest_growing_5()
+    
     age_data = data_2010.get_key_data('AGE', 'state', False)        
     age_group_data = data_2010.get_age_group_data(True)
     sex_data = data_2010.get_key_data('SEX', 'state', False) 
     sex_group_data = data_2010.get_sex_group_data(True)  
-    income_data = data_2010.get_income_group_data(False)
+    income_data = data_2010.get_key_data('INDIVIDUAL INCOME','state', False)
     income_group_data = data_2010.get_income_group_data(True)
+    poverty_data = data_2010.get_key_data('POVERTY STATUS','state', False)
     poverty_group_data = data_2010.get_poverty_group_data(True)
+    housing_data = data_2010.get_key_data('HOUSING TENURE','state', False)
     housing_group_data = data_2010.get_housing_group_data(True)
+    race_data = data_2010.get_key_data('RACE','state', True)
+    race_data_total = data_2010.get_key_data('RACE','state', False)
+    
     race_group_data = data_2010.get_race_group_data(True)
+    # race_group_data = data_2010.get_race_group_data(False)
+    
     ea_data = data_2010.get_key_data('EDUCATIONAL ATTAINMENT','state', False)
     ea_group_data = data_2010.get_education_group_data(True)
+    pop_stats = data_2010.get_population_stats()
+    sex_country = data_2010.get_sex_country_data(True)
+    age_country = data_2010.get_age_country_data(True)
+    
     
